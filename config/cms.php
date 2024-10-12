@@ -10,6 +10,7 @@ return [
             'height'=> 400
         ]
     ],
+    'default_unit_id' => 1,
     'default_category_id' => 1,
     'default_admin_id' => 1,
     'default_user_id' => 1,

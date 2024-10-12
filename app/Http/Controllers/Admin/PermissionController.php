@@ -80,8 +80,10 @@ class PermissionController extends BackendController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Permission $permission)
     {
-        //
+        
+        $permission->delete();
+        return to_route('admin.permission.index')->with("message", "Permission was deleted successfully!");
     }
 }

@@ -108,6 +108,22 @@
      
   
         @role(['admin', 'pmu'])
+
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class='bx bx-customize'></i>
+                    </div>
+                    <div class="menu-title">Product Unit</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('admin.unit.index')}}"><i class='bx bx-list-ul'></i>All Units</a>
+                    </li>
+                    <li> <a href="{{ route('admin.unit.create')}}"><i class='bx bx-add-to-queue'></i>Add New Unit</a>
+                    </li>
+                    
+                </ul>
+            </li>
+
             <li>
                 <a href="javascript:;" class="has-arrow">
                     <div class="parent-icon"><i class='bx bx-customize'></i>
@@ -164,7 +180,7 @@
                 <div class="menu-title">Manage Account</div>
             </a>
             <ul>
-                <li> <a href="ecommerce-products.html"><i class='bx bx-edit'></i>Edit Profile</a>
+                <li> <a href="{{ route('admin.profile')}}"><i class='bx bx-edit'></i>Edit Profile</a>
                 </li>
                 <li> <a href="ecommerce-products-details.html"><i class='bx bx-lock-open'></i>Change Password</a>
                 </li>

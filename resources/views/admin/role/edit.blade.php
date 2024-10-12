@@ -128,7 +128,7 @@
 						<select name="permissions[]"class="form-select" id="multiple-select-field" data-placeholder="Choose anything" multiple>
 						
 							@foreach($permissions as $permission)
-								<option value="{{ $permission->id }}">{{ $permission->name }}</option>
+								<option value="{{ $permission->id }}" @selected($role->hasPermission($permission->name))>{{ $permission->name }}</option>
 							@endforeach
 							
 						</select>

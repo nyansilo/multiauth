@@ -77,11 +77,11 @@ class ProductCategory extends Model
      * strl_plural() is helper function which check on the count then assign
      * the appropiate display format
      */
-    public function productsNumber($label = 'product')
+    public function categoriesNumber($label = 'category')
     {
-        $productsNumber = $this->products()->count();
+        $categoriesNumber = $this->name->count();
 
-        return $productsNumber. " " . Str::plural($label, $productsNumber);
+        return $categoriesNumber. " " . Str::plural($label, $categoriesNumber);
     }
 
   

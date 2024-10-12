@@ -15,6 +15,6 @@ class BackendController extends Controller
     {
         $this->middleware('auth:admin');
         $this->middleware('check-permissions');
-        $this->uploadPath = public_path(config('cms.image.directory'));
+      
     }
 }

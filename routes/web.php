@@ -108,20 +108,23 @@ Route::group(
         //Admin Dashboard after login
         Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
 
-
+        //Profile root
+        Route::get('/profile', 'ProfileController@profileIndex')->name('admin.profile');
+        Route::post('profile/store','ProfileController@profileStore')->name('admin.profile.store');
 
         Route::get('/order', 'OrderController@index')->name('admin.order');
-         //orderDetail
+
+        //orderDetailHOD
         Route::get('/order/hod/{orderId}', [
             'uses' => 'OrderController@orderDetailHOD',
             'as'   => 'admin.order.detail.hod'
         ]);
 
-         //orderDetail
-         Route::get('/order/pmu/{orderId}', [
+        //orderDetailPMU
+        Route::get('/order/pmu/{orderId}', [
           'uses' => 'OrderController@orderDetailPMU',
           'as'   => 'admin.order.detail.pmu'
-      ]);
+        ]);
 
         //orderUpdateHOD
         Route::put('/order/hod/{orderId}', [
@@ -149,9 +152,16 @@ Route::group(
 
 
 
-
-
-
+     Route::resource('/unit',  'UnitController', 
+     ['names' => [
+       'index'    => 'admin.unit.index',
+       'store'    => 'admin.unit.store',
+       'create'   => 'admin.unit.create',
+       'update'   => 'admin.unit.update',
+       'show'     => 'admin.unit.show',
+       'destroy'  => 'admin.unit.destroy',
+       'edit'     => 'admin.unit.edit',
+      ]]);
 
 
         Route::resource('/product',  'ProductController', 

@@ -9,4 +9,11 @@ class Permission extends PermissionModel
     protected $fillable = [
         'name','slug','display_name','description',
     ];
+
+    public function hasPermissions($name): bool 
+    {
+        return $this->permissions()->where('name', $name)->exists();
+    }
+
+
 }
