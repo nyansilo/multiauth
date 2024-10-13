@@ -8,8 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
-class ProfileController extends Controller
-{
+class ProfileController extends BackendController{
 
     protected $uploadPath;
     public function __construct()

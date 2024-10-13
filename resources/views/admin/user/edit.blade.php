@@ -99,18 +99,6 @@
 					@endif
 			
 
-					<div class="col-md-12  py-2 {{ $errors->has('slug') ? 'is-invalid' : '' }}">
-						<label for="input2" class="form-label">Slug</label>
-						<input type="text"  name="slug" class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" 
-						id="slug" placeholder="Slug" value="{{ $user->slug }}"  >
-					</div>
-
-					@if($errors->has('slug'))
-					<div class="invalid-feedback">{{ $errors->first('slug') }}
-					</div>
-					@endif
-				
-
 					<div class="col-md-12  py-2 {{ $errors->has('phone_number') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label"> Phone Number </label>
 						<input type="text"  name="phone_number" class="form-control {{ $errors->has('phone_number') ? 'is-invalid' : '' }}" 
@@ -124,7 +112,7 @@
 
 
 					<div class="col-md-12  py-2 {{ $errors->has('position') ? 'is-invalid' : '' }}">
-						<label for="input2" class="form-label"> Job Title</label>
+						<label for="input2" class="form-label"> Position</label>
 						<input type="text"  name="position" class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" 
 						id="jobTitle" placeholder="Job Title" value="{{ $user->position }}" >
 					</div>
@@ -160,7 +148,7 @@
 						<option value="">Select Department...</option>
 						@foreach ($departments as $department)
 
-							<option value="{{ $department->id }}">{{ $department->name }}</option>
+							<option value="{{ $department->id }}" {{ $user->department_id == $department->id ? 'selected': '' }}>{{ $department->name }}</option>
 						@endforeach
 					</select>
 				</div>
@@ -183,7 +171,9 @@
 
 				<div class="col-md-12  py-2 {{ $errors->has('bio') ? 'is-invalid' : '' }}">
 					<label for="input2" class="form-label"> Bio</label>
-					<textarea  placeholder="Address ..." rows="3" name="bio" class="form-control {{ $errors->has('bio') ? 'is-invalid' : '' }}" id="bio" ></textarea>
+					<textarea  placeholder="Address ..." rows="3" name="bio" class="form-control {{ $errors->has('bio') ? 'is-invalid' : '' }}" id="bio" >
+						{{ $user->bio }}
+					</textarea>
 	
 				</div>
 

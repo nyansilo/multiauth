@@ -34,7 +34,7 @@
                                     </td>
                                     <td>
 
-                                        @if($cartItem->product->image)
+                                        @if(!empty($cartItem->product->imageUrl))
 
                                             <img  class="product-img-2"
                                             src="{{ $cartItem->product->imageUrl }}" 
@@ -55,7 +55,7 @@
                                         {{ substr($cartItem->product->name, 0, 30)}}...
                                     
                                     </td>
-                                    <td><div class="badge rounded-pill text-info bg-light-info p-2 text-uppercase px-3">{{ $cartItem->product->unit->name}}</div></td>                         
+                                    <td><div class="badge rounded-pill text-info bg-light-info p-2 text-uppercase px-3"> {{  $cartItem->product->unit->name }}</div></td>                         
                                     <td> 
                                         <div class="col-md-3">
                                             <div class="input-group input-spinner ">

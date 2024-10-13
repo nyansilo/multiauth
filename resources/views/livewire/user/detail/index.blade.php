@@ -2,8 +2,10 @@
     <div class="card">
 		<div class="row g-0">
 		  <div class="col-md-4 border-end">
-
-				@if($product->image)
+			
+			
+			
+				@if(!empty($product->imageUrl))
 
 					<img class="img-fluid"
 					src="{{ $product->imageUrl }}" 
@@ -33,7 +35,7 @@
 				<dd class="col-sm-9">
 					<div class="mb-3"> 
 						<span class="price h4">{{$product->quantity}} </span> 
-						<span class="text-muted">{{$product->productLabel()}}</span> 
+						<span class="text-muted">{{  Str::plural($product->unit->name,  $product->quantity )}}</span> 
 						<div class="badge rounded-pill bg-info text-white text-lowercase px-2">
 							in Stock
 						</div>

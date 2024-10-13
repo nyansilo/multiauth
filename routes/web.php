@@ -47,6 +47,11 @@ Route::group(
       Route::get('/thank-you', 'DashboardController@thankYou')->name('user.thankyou');
       Route::get('/order', 'OrderController@index')->name('user.order');
 
+
+      //Admin Profile root
+      Route::get('/profile', 'ProfileController@profileIndex')->name('user.profile');
+      Route::post('/profile/store','ProfileController@profileStore')->name('user.profile.store');
+
       //propertyDetail
       Route::get('/product/{product}', [
           'uses' => 'DashboardController@productDetail',
@@ -108,9 +113,11 @@ Route::group(
         //Admin Dashboard after login
         Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard');
 
-        //Profile root
+        //Admin Profile root
         Route::get('/profile', 'ProfileController@profileIndex')->name('admin.profile');
-        Route::post('profile/store','ProfileController@profileStore')->name('admin.profile.store');
+        Route::post('/profile/store','ProfileController@profileStore')->name('admin.profile.store');
+
+
 
         Route::get('/order', 'OrderController@index')->name('admin.order');
 

@@ -32,7 +32,6 @@ class Product extends Model
         'published_at', 
         'category_id', 
         'view_count',
-        'published_at',
         'deleted_at'
     ];
    
@@ -70,6 +69,10 @@ class Product extends Model
    public function unit(): BelongsTo{
        return $this->belongsTo(Unit::class, 'unit_id');
    }
+
+
+
+  
 
     //===================== SCOPE MODEL START ===============================
 

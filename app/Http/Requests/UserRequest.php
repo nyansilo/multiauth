@@ -28,10 +28,10 @@ class UserRequest extends FormRequest
         $rules = [
             'first_name'        => 'required',
             'last_name'         => 'required',
-            'email'         => 'email|required|unique:admins',
-            'password'      => 'required|confirmed',
+            'email'             => 'email|required|unique:users',
+            'password'          => 'required|confirmed',
             'phone_number'      => 'required',
-            'job_title'         => 'required',
+            'position'         => 'required',
             'department_id'     => 'required',
             
         ];
@@ -42,7 +42,7 @@ class UserRequest extends FormRequest
          switch($this->method()) {
             case 'PUT':
             case 'PATCH':
-                $rules['slug'] = 'required|unique:users,slug,' . $this->route('admin.user');
+                $rules['slug'] = 'required|unique:users,slug' . $this->route('admin.user');
                 break;
         }
 

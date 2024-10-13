@@ -206,7 +206,7 @@ class UserController extends BackendController
         $user = User::findOrFail($id);
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-        $user->slug = $request->slug;
+        $user->slug    = Str::slug($request->first_name."-".$request->first_name, "-");
         $user->email = $request->email;
         $user->position = $request->position;
         $user->bio = $request->bio;
@@ -220,7 +220,7 @@ class UserController extends BackendController
         // if ($oldImage !== $user->image) {
         //     $this->removeImage($oldImage);
         // }
-        $save->save();
+        $user->save();
         $notification = array(
 
             'message' => 'Your user was updated successfully!',
@@ -252,7 +252,7 @@ class UserController extends BackendController
         $user->forceDelete();
 
 
-        $this->removeImage($user->image);
+        $this->removeImage($user->profile_picture);
 
         return redirect('/admin/user?status=trash')->with('message', 'Your user has been deleted successfully');
     }

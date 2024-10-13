@@ -20,11 +20,11 @@ class ProductController extends BackendController
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     //$this->middleware('auth:admin');
-    //     $this->uploadPath = public_path(config('cms.image.directory'));
-    // }
+    public function __construct()
+    {
+        //$this->middleware('auth:admin');
+        $this->uploadPath = public_path(config('cms.image.directory'));
+    }
     /**
      * Display a listing of the resource.
      *

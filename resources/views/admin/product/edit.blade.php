@@ -34,19 +34,20 @@
 <hr/>
 <div class="row">
 
-	<form  id="product-form" class="row g-3 needs-validation" novalidate="" method="POST" action="{{ route('admin.product.store')}}" enctype="multipart/form-data">
-		@csrf
+	<form  id="product-form" class="row g-3 needs-validation" novalidate="" method="POST" action="{{ route('admin.product.update', $product->id )}}" enctype="multipart/form-data">
+	@method('PUT')
+	@csrf
 	<div class="col-xl-8 mx-auto">
 		<div class="card">
 			<div class="card-header px-4 py-3">
-				<h5 class="mb-0">Add New product Form</h5>
+				<h5 class="mb-0">Edit product Form</h5>
 			</div>
 			<div class="card-description p-4">
 
 
 					<div class="col-md-12  py-2 {{ $errors->has('name') ? 'is-invalid' : '' }}">
 						<label for="input1" class="form-label"> Name </label>
-						<input type="text"  name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name"  >
+						<input type="text"  name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name"   value="{{ $product->name }}">
 					</div>
 					@if($errors->has('name'))
 					<div class="invalid-feedback">{{ $errors->first('name') }}
@@ -56,7 +57,7 @@
 
 					<div class="col-md-12  py-2 {{ $errors->has('slug') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label">Slug</label>
-						<input type="text"  name="slug" class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" id="slug"  >
+						<input type="text"  name="slug" class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" id="slug"   value="{{ $product->slug}}" >
 					</div>
 
 					@if($errors->has('slug'))
@@ -67,7 +68,7 @@
 
 					<div class="col-md-12  py-2 {{ $errors->has('brand') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label">brand</label>
-						<input type="text"  name="brand" class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" id="brand"  >
+						<input type="text"  name="brand" class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" id="brand"  value="{{ $product->brand}}"  >
 					</div>
 
 					@if($errors->has('brand'))
@@ -85,7 +86,7 @@
 						<select name="category_id" class="form-select mb-3 {{ $errors->has('category_id') ? 'is-invalid' : '' }}" aria-label="Default select example">
 							<option selected="">Select Category</option>
 							@foreach($names as $id => $name)
-								<option value="{{ $id }}">{{ $name }}</option>
+								<option value="{{ $id }}" {{ $product->category->id == $id ? 'selected': '' }}>{{ $name }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -98,7 +99,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<label for="input8" class="form-label">Quantity</label>
-							<input type="text" name="quantity" class="form-control" id="input8" placeholder="quantity">
+							<input type="text" name="quantity" class="form-control" id="input8" placeholder="quantity" value="{{ $product->quantity}}">
 						</div>
 
 						@if($errors->has('quantity'))
@@ -115,9 +116,12 @@
 							<select id="input9" name="unit_id" class="form-select mb-3 {{ $errors->has('unit_id') ? 'is-invalid' : '' }}" aria-label="Default select example">
 								<option selected="">Select Unit</option>
 								@foreach($names as $id => $name)
-									<option value="{{ $id }}">{{ $name }}</option>
+									<option value="{{ $id }}" {{ $product->unit->id == $id ? 'selected': '' }}  >{{ $name }}</option>
 								@endforeach
 							</select>
+
+						
+							
 						</div>
 						@if($errors->has('unit_id'))
 							<div class="invalid-feedback">{{ $errors->first('unit_id') }}
@@ -125,9 +129,10 @@
 						@endif	
 					</div>	
 
-					<div class="col-md-12  py-2 {{ $errors->has('description') ? 'is-invalid' : '' }}">
+					<div class="col-md-12  py-2  {{ $errors->has('description') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label"> Description</label>
-						<textarea rows="3" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description"  >
+						<textarea rows="3" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description" >
+							{{ $product->description }}
 						</textarea>	
 					</div>
 
@@ -152,23 +157,40 @@
 
 			<div class="card-description">
 
-				<div class="col-md-12 py-2 {{ $errors->has('image') ? 'is-invalid' : '' }}">
-
-						<!-- Upload image input-->
-						<div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-							<input id="upload" type="file" name="image" onchange="readURL(this);" class="form-control border-0">
-							<label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-							<div class="input-group-append">
-								<label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-							</div>
-						</div>
-
-						<div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+					<div class="col-md-12 py-2 px-4  {{ $errors->has('image') ? 'is-invalid' : '' }}">							
 							
-                    @if($errors->has('image'))
-                        <span class="invalid-feedback">{{ $errors->first('image') }}</span>
-                    @endif
-                </div>   
+					  <input type="file" name="image" class="form-control" id="image" >		
+					</div>
+
+					@if($errors->has('image'))
+						<div class="invalid-feedback">{{ $errors->first('image') }}</div>
+					@endif
+						
+					<div class="col-md-12 py-4 px-4">
+
+						<div class="d-flex flex-column align-items-center text-center">
+
+							@if(!empty($product->image))
+
+								
+								<img  class="card-img-img-fluid p-1 bg-primary" width="250"
+								id="showImage"
+								src="{{ $product->imageUrl }}" 
+								alt="{{ $product->name}}">
+
+							@else 
+
+								<img  class="card-img-img-fluid p-1 bg-primary" width="250"
+								id="showImage"
+								src="{{ $product->defaultImg }}"  
+								alt="{{ $product->name }}">
+									
+							@endif
+						</div>		
+					</div>				
+				
+				   
+						
 				
 			</div>
 		</div>
@@ -182,7 +204,7 @@
 
 					<div class="col-md-12 py-2 {{ $errors->has('published_at') ? 'is-invalid' : '' }}">
 						<label class="form-label">Published At</label>
-						<input type="text" name="published_at" class="form-control date-time flatpickr-input {{ $errors->has('published_at') ? 'is-invalid' : '' }}" readonly="readonly">
+						<input type="text" name="published_at" class="form-control date-time flatpickr-input {{ $errors->has('published_at') ? 'is-invalid' : '' }}" readonly="readonly" value="{{ $product->published_at}}">
 					</div>
 					@if($errors->has('published_at'))
 					<div class="invalid-feedback">{{ $errors->first('published_at') }}

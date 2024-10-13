@@ -63,12 +63,7 @@
                                             <div class="email">Department: {{ auth()->user()->department->name }}</div>
                                          </h6>   
                                     </div>
-                                    <div class="col invoice-details">
-                                        <h6>
-                                            <div class="date">No: 112</div>
-                                            <div class="date">Date:  </div>
-                                        </h6>    
-                                    </div>
+                                    
                                 </div>
 
                                 <div class="text-gray-light mb-3">Please issue the following items</div>   

@@ -47,7 +47,7 @@
 				
 					<div class="col-md-12 py-2 {{ $errors->has('first_name') ? 'is-invalid' : '' }}">
 						<label for="input1" class="form-label"> First Name</label>
-						<input type="text"  name="first_name" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : '' }}" id="firstName"  >
+						<input type="text"  name="first_name" class="form-control {{ $errors->has('first_name') ? 'is-invalid' : '' }}" id="firstName"  value="{{ old('first_name')}}" >
 					</div>
 					@if($errors->has('first_name'))
 					<div class="invalid-feedback">{{ $errors->first('first_name') }}
@@ -56,7 +56,7 @@
 
 					<div class="col-md-12 py-2 {{ $errors->has('last_name') ? 'is-invalid' : '' }}">
 						<label for="input1" class="form-label"> Last Name</label>
-						<input type="text"  name="last_name" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}" id="lastName"  >
+						<input type="text"  name="last_name" class="form-control {{ $errors->has('last_name') ? 'is-invalid' : '' }}" id="lastName"  value="{{ old('last_name')}}" >
 					</div>
 					@if($errors->has('last_name'))
 					<div class="invalid-feedback">{{ $errors->first('last_name') }}
@@ -64,9 +64,6 @@
 					@endif
 
 					
-
-				
-			
 					<div class="col-md-12 py-2 {{ $errors->has('password') ? 'is-invalid' : '' }}">
 						<label for="input1" class="form-label"> Password</label>
 						<input type="password"  name="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password"  >
@@ -85,11 +82,10 @@
 					</div>
 					@endif
 
-				
 
 					<div class="col-md-12  py-2 {{ $errors->has('email') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label"> Email </label>
-						<input type="text"  name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email"  >
+						<input type="text"  name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" id="email"  value="{{ old('email')}}" >
 					</div>
 
 					@if($errors->has('email'))
@@ -99,11 +95,6 @@
 			
 				
 
-					@if($errors->has('slug'))
-					<div class="invalid-feedback">{{ $errors->first('slug') }}
-					</div>
-					@endif
-				
 
 					<div class="col-md-12  py-2 {{ $errors->has('phone_number') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label"> Phone Number </label>
@@ -118,7 +109,7 @@
 
 
 					<div class="col-md-12  py-2 {{ $errors->has('position') ? 'is-invalid' : '' }}">
-						<label for="input2" class="form-label"> Job Title</label>
+						<label for="input2" class="form-label"> Position</label>
 						<input type="text"  name="position" class="form-control {{ $errors->has('position') ? 'is-invalid' : '' }}" 
 						id="jobTitle" placeholder="Job Title" value="{{ old('position')}}" >
 					</div>

@@ -25,7 +25,7 @@
                         <div class="position-relative">
                             <div class="cart-product rounded-circle bg-light">
 
-                                @if($cartItem->product->image)
+                                @if(!empty($cartItem->product->imageUrl))
 
                                     <img  class="product-img-2"
                                     src="{{ $cartItem->product->imageUrl }}" 
@@ -42,7 +42,7 @@
                         </div>
                         <div class="flex-grow-1">
                             <h6 class="cart-product-title mb-0"> {{ substr($cartItem->product->name, 0, 15)}}...</h6>
-                            <p class="cart-product-price mb-0">{{ $cartItem->quantity}} X {{ $cartItem->product->unit->name}}</p>
+                            <p class="cart-product-price mb-0">{{ $cartItem->quantity}} X {{  Str::plural($cartItem->product->unit->name,  $cartItem->quantity )}}</p>
                         </div>
                    
                         <div class="cart-product-cancel">

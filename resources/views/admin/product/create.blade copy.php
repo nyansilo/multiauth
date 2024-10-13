@@ -34,62 +34,108 @@
 <hr/>
 <div class="row">
 
-	<form  id="product-form" class="row g-3 needs-validation" novalidate="" method="POST" action="{{ route('admin.product.store')}}">
+	<form  id="product-form" class="row g-3 needs-validation" novalidate="" method="POST" action="{{ route('admin.product.store')}}" enctype="multipart/form-data">
 		@csrf
 	<div class="col-xl-8 mx-auto">
 		<div class="card">
 			<div class="card-header px-4 py-3">
 				<h5 class="mb-0">Add New product Form</h5>
 			</div>
-			<div class="card-body p-4">
+			<div class="card-description p-4">
 
-				
-			
-					
-				
-					<div class="col-md-12  py-2 {{ $errors->has('title') ? 'is-invalid' : '' }}">
-						<label for="input1" class="form-label"> Title <Title></Title></label>
-						<input type="text"  name="title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="title"  >
+
+					<div class="col-md-12  py-2 {{ $errors->has('name') ? 'is-invalid' : '' }}">
+						<label for="input1" class="form-label"> Name </label>
+						<input type="text"  name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" id="name"  >
 					</div>
-					@if($errors->has('title'))
-					<div class="invalid-feedback">{{ $errors->first('title') }}
+					@if($errors->has('name'))
+					<div class="invalid-feedback">{{ $errors->first('name') }}
 					</div>
 					@endif
 								
 
 					<div class="col-md-12  py-2 {{ $errors->has('slug') ? 'is-invalid' : '' }}">
 						<label for="input2" class="form-label">Slug</label>
-						<input type="text"  name="slug" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" id="slug"  >
+						<input type="text"  name="slug" class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" id="slug"  >
 					</div>
 
 					@if($errors->has('slug'))
-					<div class="invalid-feedback">{{ $errors->first('slug') }}
-					</div>
-					@endif
-				
-
-					<div class="col-md-12  py-2 {{ $errors->has('excerpt') ? 'is-invalid' : '' }}">
-						<label for="input2" class="form-label"> Excerpt </label>
-						<input type="text"  name="excerpt" class="form-control {{ $errors->has('excerpt') ? 'is-invalid' : '' }}" id="excerpt"  >
-					</div>
-
-					@if($errors->has('excerpt'))
-					<div class="invalid-feedback">{{ $errors->first('excerpt') }}
-					</div>
+						<div class="invalid-feedback">{{ $errors->first('slug') }}
+						</div>
 					@endif
 
 
-					<div class="col-md-12  py-2 {{ $errors->has('body') ? 'is-invalid' : '' }}">
-						<label for="input2" class="form-label"> Body</label>
-						<input type="text"  name="body" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}" id="body"  >
+					<div class="col-md-12  py-2 {{ $errors->has('brand') ? 'is-invalid' : '' }}">
+						<label for="input2" class="form-label">brand</label>
+						<input type="text"  name="brand" class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" id="brand"  >
 					</div>
 
-					@if($errors->has('body'))
-					<div class="invalid-feedback">{{ $errors->first('body') }}
-					</div>
+					@if($errors->has('brand'))
+						<div class="invalid-feedback">{{ $errors->first('brand') }}
+						</div>
 					@endif
 
+
+					<div class="col-md-12 py-2 {{ $errors->has('category_id') ? 'is-invalid' : '' }}">
+
+						<label class="form-label">Product Category</label>
+	
+						<?php $names=  App\Models\ProductCategory::pluck('name', 'id') ?>
+	
+						<select name="category_id" class="form-select mb-3 {{ $errors->has('category_id') ? 'is-invalid' : '' }}" aria-label="Default select example">
+							<option selected="">Select Category</option>
+							@foreach($names as $id => $name)
+								<option value="{{ $id }}">{{ $name }}</option>
+							@endforeach
+						</select>
+					</div>
+					@if($errors->has('category_id'))
+						<div class="invalid-feedback">{{ $errors->first('category_id') }}
+						</div>
+					@endif	
 					
+
+					<div class="row">
+						<div class="col-md-6">
+							<label for="input8" class="form-label">Quantity</label>
+							<input type="text" name="quantity" class="form-control" id="input8" placeholder="quantity">
+						</div>
+
+						@if($errors->has('quantity'))
+							<div class="invalid-feedback">{{ $errors->first('quantity') }}
+							</div>
+						@endif	
+
+						<div class="col-md-6 {{ $errors->has('unit_id') ? 'is-invalid' : '' }}">
+
+							<label class="form-label">Product Unit</label>
+	
+							<?php $names=  App\Models\Unit::pluck('name', 'id') ?>
+	
+							<select id="input9" name="unit_id" class="form-select mb-3 {{ $errors->has('unit_id') ? 'is-invalid' : '' }}" aria-label="Default select example">
+								<option selected="">Select Unit</option>
+								@foreach($names as $id => $name)
+									<option value="{{ $id }}">{{ $name }}</option>
+								@endforeach
+							</select>
+						</div>
+						@if($errors->has('unit_id'))
+							<div class="invalid-feedback">{{ $errors->first('unit_id') }}
+							</div>
+						@endif	
+					</div>	
+
+					<div class="col-md-12  py-2 {{ $errors->has('description') ? 'is-invalid' : '' }}">
+						<label for="input2" class="form-label"> Description</label>
+						<textarea rows="3" name="description" class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" id="description"  >
+						</textarea>	
+					</div>
+
+					@if($errors->has('description'))
+					<div class="invalid-feedback">{{ $errors->first('description') }}
+					</div>
+					@endif
+		
 				
 			</div>
 		</div>
@@ -98,16 +144,45 @@
 
 
 	<div class="col-xl-4 mx-auto">
+
+		<div class="card">
+			<div class="card-header px-4 py-3">
+				<h5 class="mb-0">Product Image</h5>
+			</div>
+
+			<div class="card-description">
+
+				<div class="col-md-12 py-2 {{ $errors->has('image') ? 'is-invalid' : '' }}">
+
+						<!-- Upload image input-->
+						<div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+							<input id="upload" type="file" name="image" onchange="readURL(this);" class="form-control border-0">
+							<label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+							<div class="input-group-append">
+								<label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+							</div>
+						</div>
+
+						<div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+							
+                    @if($errors->has('image'))
+                        <span class="invalid-feedback">{{ $errors->first('image') }}</span>
+                    @endif
+                </div>   
+				
+			</div>
+		</div>
+
 		<div class="card">
 			<div class="card-header px-4 py-3">
 				<h5 class="mb-0">Published Date</h5>
 			</div>
-			<div class="card-body p-4">
+			<div class="card-description p-4">
 
 
 					<div class="col-md-12 py-2 {{ $errors->has('published_at') ? 'is-invalid' : '' }}">
 						<label class="form-label">Published At</label>
-						<input type="text" name="published_at" class="form-control date-time flatpickr-input {{ $errors->has('title') ? 'is-invalid' : '' }}" readonly="readonly">
+						<input type="text" name="published_at" class="form-control date-time flatpickr-input {{ $errors->has('published_at') ? 'is-invalid' : '' }}" readonly="readonly">
 					</div>
 					@if($errors->has('published_at'))
 					<div class="invalid-feedback">{{ $errors->first('published_at') }}
@@ -127,68 +202,7 @@
 			</div>
 		</div>	
 	
-		<div class="card">
-			<div class="card-header px-4 py-3">
-				<h5 class="mb-0">Product Category</h5>
-			</div>
-
-			<div class="card-body">
-
-				<div class="col-md-12 py-2 {{ $errors->has('category_id') ? 'is-invalid' : '' }}">
-
-					<label class="form-label">Category</label>
-
-					<?php $titles=  App\Models\ProductCategory::pluck('title', 'id') ?>
-
-					<select name="category_id" class="form-select mb-3" aria-label="Default select example">
-						<option selected="">Select Category</option>
-						@foreach($titles as $id => $title)
-							<option value="{{ $id }}">{{ $title }}</option>
-						@endforeach
-					</select>
-				</div>
-				@if($errors->has('category_id'))
-					<div class="invalid-feedback">{{ $errors->first('category_id') }}
-					</div>
-				@endif	
-				
-			</div>
-		</div>
-
-		<div class="card">
-			<div class="card-header px-4 py-3">
-				<h5 class="mb-0">Product Image</h5>
-			</div>
-
-			<div class="card-body">
-
-				<div class="col-md-12 py-2 {{ $errors->has('image') ? 'is-invalid' : '' }}">
-
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-new img-thumbnail mb-3 " style="width: 200px; height: 150px;">
-                             <img src="{{ ($product->image_thumb_url) ? $product->image_thumb_url : '/img/default-image.jpeg' }}" alt="...">
-                        </div>
-                        <div class="fileinput-preview fileinput-exists img-thumbnail" style="width: 200px; height: 150px;">
-                            
-                        </div>
-                        <div style="margin-top: 10px;">
-                          <span class="btn btn-outline-secondary btn-file">
-                            <span class="fileinput-new">Select image</span>
-                            <span class="fileinput-exists">Change</span>
-    
-							<input type="file" name="image">
-                          </span>
-                          <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
-                        </div>
-                      </div>
-                   
-                    @if($errors->has('image'))
-                        <span class="invalid-feedback">{{ $errors->first('image') }}</span>
-                    @endif
-                </div>   
-				
-			</div>
-		</div>
+		
 	</div>	
 	
 

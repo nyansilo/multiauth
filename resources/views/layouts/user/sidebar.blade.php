@@ -49,7 +49,7 @@
                 <div class="menu-title">Manage Account</div>
             </a>
             <ul>
-                <li> <a href="ecommerce-products.html"><i class='bx bx-edit'></i>Edit Profile</a>
+                <li> <a href="{{ route('user.profile') }}"><i class='bx bx-edit'></i>Edit Profile</a>
                 </li>
                 <li> <a href="ecommerce-products-details.html"><i class='bx bx-lock-open'></i>Change Password</a>
                 </li>

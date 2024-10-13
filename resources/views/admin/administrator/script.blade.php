@@ -1,17 +1,6 @@
+
+
 <script type="text/javascript">
-    $(document).ready(function (){
-        $('#firtName').on('keyup', function() {
-            var str= $('#firstName').val();
-            str = str.replace(/\W+(?!$)/g, '-').toLowerCase();
-            $('#slug').val(str);
-            $('slug').attr('placeholder', str);
-        });        
-    });
-    
-    </script>
-
-<script>
-
     $(document).ready(function(){
         var permissions_box = $('#permissions_box');
         var permissions_ckeckbox_list = $('#permissions_ckeckbox_list');

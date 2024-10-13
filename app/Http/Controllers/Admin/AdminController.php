@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Role;
 use App\Models\Admin;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Department;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laratrust\Models\Permission;
 use App\Models\User as UserModel;
@@ -19,7 +21,6 @@ use App\Http\Requests\AdminStoreRequest;
 use App\Http\Requests\AdminUpdateRequest;
 use App\Http\Requests\AdminDestroyRequest;
 use App\Http\Controllers\Admin\BackendController;
-use App\Models\Product;
 
 class AdminController extends BackendController 
 {
@@ -113,15 +114,15 @@ class AdminController extends BackendController
          //$data = $request->all();
          //$data['password'] = bcrypt($data['password']);
 
-         $admin = new Admin();
-        $admin->first_name = $request->first_name;
-        $admin->last_name = $request->last_name;
-        $admin->slug = $request->slug;
-        $admin->email = $request->email;
-        $admin->position = $request->position;
-        $admin->bio = $request->bio;
-        $admin->phone_number = $request->phone_number;
-        $admin->department_id = $request->department_id;
+        $admin = new Admin();
+        $admin->first_name     = $request->first_name;
+        $admin->last_name      = $request->last_name;
+        $admin->slug           = Str::slug($request->first_name."-".$request->first_name, "-");
+        $admin->email          = $request->email;
+        $admin->position       = $request->position;
+        $admin->bio            = $request->bio;
+        $admin->phone_number   = $request->phone_number;
+        $admin->department_id  = $request->department_id;
 
         if($request->password != null ){
             $admin->password = Hash::make($request->password);
@@ -135,14 +136,16 @@ class AdminController extends BackendController
         $admin->save();
 
         if($request->role != null){
-             $admin->roles()->attach($request->role);
+             ///$admin->roles()->attach($request->role);
+             $admin->addRole($request->role);
              $admin->save();
         }
 
         if($request->permissions != null){            
             foreach ($request->permissions as $permission) {
-                 $admin->permissions()->attach($permission);
-                 $admin->save();
+            // $admin->permissions()->attach($permission);
+                $admin->givePermission($permission);
+                $admin->save();
             }
         }
 
@@ -195,14 +198,14 @@ class AdminController extends BackendController
         //Admin::findOrFail($id)->update($request->all());
 
         $admin = Admin::findOrFail($id);
-        $admin->first_name = $request->first_name;
-        $admin->last_name = $request->last_name;
-        $admin->slug = $request->slug;
-        $admin->email = $request->email;
-        $admin->position = $request->position;
-        $admin->bio = $request->bio;
-        $admin->phone_number = $request->phone_number;
-        $admin->department_id = $request->department_id;
+        $admin->first_name     = $request->first_name;
+        $admin->last_name      = $request->last_name;
+        $admin->slug           = Str::slug($request->first_name."-".$request->first_name, "-");
+        $admin->email          = $request->email;
+        $admin->position       = $request->position;
+        $admin->bio            = $request->bio;
+        $admin->phone_number   = $request->phone_number;
+        $admin->department_id  = $request->department_id;
 
         if($request->password != null ){
             $admin->password = Hash::make($request->password);
@@ -210,25 +213,48 @@ class AdminController extends BackendController
 
      
 
-        //$admin->update($request->all());
+    
+      
         $admin->save();
-
        
 
-         $admin->roles()->detach();
-         $admin->permissions()->detach();
+        // $admin->roles()->detach();
+        // $admin->permissions()->detach();
+
+        $adminRole = $admin->roles->first();
+        $adminPermissions = $admin->permissions;
+
+        //Trying to remove all roles and permission before assign new one
 
         if($request->role != null){
-             $admin->roles()->attach($request->role);
-             $admin->save();
-        }
-
-        if($request->permissions != null){            
-            foreach ($request->permissions as $permission) {
-                 $admin->permissions()->attach($permission);
+                 $admin->removeRole($adminRole);
                  $admin->save();
-            }
         }
+        
+        if($request->permissions != null){  
+            foreach ( $adminPermissions  as  $adminPermission ) {
+                // $admin->permissions()->attach($permission);
+                $admin->removePermission($adminPermission);
+                $admin->save();
+            }
+        }    
+       
+
+        //Updating the new roles and permission 
+       
+        if($request->role != null){
+            ///$admin->roles()->attach($request->role);
+            $admin->addRole($request->role);
+            $admin->save();
+       }
+
+       if($request->permissions != null){            
+           foreach ($request->permissions as $permission) {
+           // $admin->permissions()->attach($permission);
+               $admin->givePermission($permission);
+               $admin->save();
+           }
+       }
 
         return redirect("/admin/admin")->with("message", "Admin was updated successfully!");
     }
@@ -246,16 +272,27 @@ class AdminController extends BackendController
         $deleteOption  = $request->delete_option;
         $selectedAdmin  = $request->selected_admin;
 
-        if ($deleteOption == "delete") {
-            // delete user blogs
-            $admin->blogs()->withTrashed()->forceDelete();
-        }
-        elseif ($deleteOption == "attribute") {
-            $admin->blogs()->update(['author_id' => $selectedAdmin]);
-        }
+        // if ($deleteOption == "delete") {
+        //     // delete user blogs
+        //     $admin->products()->withTrashed()->forceDelete();
+        // }
+        // elseif ($deleteOption == "attribute") {
+        //     $admin->products()->update(['author_id' => $selectedAdmin]);
+        // }
 
-        $admin->roles()->detach();
-        $admin->permissions()->detach();
+      
+
+        // $adminRole = $admin->roles->first();
+        // $adminPermissions = $admin->permissions;
+
+        //Trying to remove all roles and permission before deleting admin
+       
+        // $admin->removeRole($adminRole);
+        // foreach( $adminPermissions  as  $adminPermission ) {
+        //   $admin->removePermission($adminPermission);
+          
+        // } 
+
         $admin->delete();
 
         return redirect("/admin/admin")->with("message", "Admin was deleted successfully!");
@@ -275,10 +312,19 @@ class AdminController extends BackendController
     {
         $admin = Admin::withTrashed()->findOrFail($id);
         //dd($product->image);
+        $adminRole = $admin->roles->first();
+        $adminPermissions = $admin->permissions;
+
+         //Trying to remove all roles and permission before deleting admin
+       
+        $admin->removeRole($adminRole);
+        foreach( $adminPermissions  as  $adminPermission ) {
+            $admin->removePermission($adminPermission);        
+        } 
+ 
+
         $admin->forceDelete();
-
-
-        //$this->removeImage($admin->profile_image);
+        $this->removeImage($admin->profile_picture);
 
         return redirect('/admin/admin?status=trash')->with('message', 'Your admin has been deleted successfully');
     }

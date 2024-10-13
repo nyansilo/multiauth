@@ -172,6 +172,8 @@
             </ul>
         </li>
 
+        
+
         <li class="menu-label">User Profile</li>
         <li>
             <a class="has-arrow" href="javascript:;">
@@ -180,25 +182,24 @@
                 <div class="menu-title">Manage Account</div>
             </a>
             <ul>
-                <li> <a href="{{ route('admin.profile')}}"><i class='bx bx-edit'></i>Edit Profile</a>
+                <li> <a href="{{ route('admin.profile') }}"><i class='bx bx-edit'></i>Edit Profile</a>
                 </li>
                 <li> <a href="ecommerce-products-details.html"><i class='bx bx-lock-open'></i>Change Password</a>
                 </li>
                 
             </ul>
-            <li>
-         
+             <li>
 
                 <form method="POST" action="{{ route('admin.logout') }}">
-                    @csrf
-                <a href="{{ route('admin.logout')}}"  
-                    onclick="event.preventDefault(); this.closest('form').submit();" aria-expanded="false">
+                        @csrf
+                    <a href="{{ route('admin.logout')}}"  
+                        onclick="event.preventDefault(); this.closest('form').submit();" aria-expanded="false">
 
-                    <div class="parent-icon"><i class="bx bx-log-out"></i>
-                    </div>
-                    <div class="menu-title">Log Out</div>
-                </a>
-            </form>	
+                        <div class="parent-icon"><i class="bx bx-log-out"></i>
+                        </div>
+                        <div class="menu-title">Log Out</div>
+                    </a>
+                </form>	
             </li>
         </li>
 

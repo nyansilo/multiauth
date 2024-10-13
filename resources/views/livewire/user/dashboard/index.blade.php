@@ -10,7 +10,7 @@
 		<div class="col">
 			<div class="card">
 
-				@if($product->image)
+				@if(!empty($product->imageUrl))
 
 				<img class="card-img-top"
 				src="{{ $product->imageUrl }}" 
@@ -33,7 +33,7 @@
 					
 					<div class="d-flex align-items-center mt-3 fs-6">
 						<div class="cursor-pointer">
-							<p class="mb-0 float-start"><strong>{{ $product->quantity }}</strong> {{ $product->productLabel() }}</p>
+							<p class="mb-0 float-start"><strong>{{ $product->quantity }}</strong> {{  Str::plural($product->unit->name,  $product->quantity )}}</p>
 						</div>	
 						<p class="mb-0 ms-auto"><a href="{{ route('product.detail', $product->slug) }}" class="btn btn-outline-primary px-3 radius-30">
 							<span class="text">Detail</a></p>

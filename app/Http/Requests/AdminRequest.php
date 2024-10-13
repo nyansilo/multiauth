@@ -34,9 +34,9 @@ class AdminRequest extends FormRequest
                 'password'      => 'required|confirmed',
                 'department_id' => 'required',
                 'role'          => 'required',
-                'phone_number'      => 'required',
-                'job_title'         => 'required',
-                'slug'          => 'required|unique:admins',
+                'phone_number'  => 'required',
+                'position'      => 'required',
+                //'slug'          => 'required|unique:admins',
             
             
         ];
@@ -47,7 +47,7 @@ class AdminRequest extends FormRequest
          switch($this->method()) {
             case 'PUT':
             case 'PATCH':
-                $rules['slug'] = 'required|unique:admins,slug,' . $this->route('admin.administrator');
+                $rules['slug'] = 'required|unique:admins,slug' . $this->route('admin.administrator');
                 break;
         }
 
