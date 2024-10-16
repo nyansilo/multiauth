@@ -15,6 +15,7 @@ class OrderController extends BackendController
     {
 
         $ordersHOD  = Order::where('department_id', Auth::user()->department_id)->orderBy('created_at', 'desc')->get();
+        
         $ordersPMU  = Order::where('status_message', 'Approved By HOD')
                             ->orWhere('status_message', 'Approved By PMU')
                             ->orderBy('created_at', 'desc')

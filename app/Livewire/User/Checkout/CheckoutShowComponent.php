@@ -3,11 +3,14 @@
 namespace App\Livewire\User\Checkout;
 
 use App\Models\Cart;
+use App\Models\Admin;
 use App\Models\Order;
 use Livewire\Component;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\HodReceivedOrder;
+
 
 class CheckoutShowComponent extends Component
 {
@@ -66,6 +69,14 @@ class CheckoutShowComponent extends Component
                 text : 'Order placed successfully',
             );
 
+            //send notification to hod
+            $admin = Admin::where('department_id', Auth::user()->department_id)->first();
+
+            //dd($admin);
+            //$staffUser =  Auth::user()->fullName;
+            $staffUser =  Auth::user();
+            $admin->notify(new HodReceivedOrder($placeOrder, $staffUser));
+
             return redirect()->route('user.thankyou');
     
         }else{
@@ -74,7 +85,7 @@ class CheckoutShowComponent extends Component
                 text : 'Something went wrong',
             );
     
-        }
+        } 
     }
 
     public function render()

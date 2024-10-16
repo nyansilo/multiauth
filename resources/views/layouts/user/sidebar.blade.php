@@ -33,9 +33,9 @@
             <ul>
                 <li> <a href="{{ route('user.order')}}"><i class='bx bx-list-ul'></i>All Orders</a>
                 </li>
-                <li> <a href="ecommerce-products-details.html"><i class='bx bx-add-to-queue'></i>Pending Order</a>
+                <li> <a href="{{ route('user.pending.order') }}"><i class='bx bx-add-to-queue'></i>Pending Order</a>
                 </li>
-                <li> <a href="ecommerce-products-details.html"><i class='bx bx-add-to-queue'></i>Approved Order</a>
+                <li> <a href="{{ route('user.approved.order') }}"><i class='bx bx-add-to-queue'></i>Approved Order</a>
                 </li>
                 
             </ul>

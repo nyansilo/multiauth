@@ -12,10 +12,33 @@ class OrderController extends Controller
     public function index()
     {
 
-        $orders  = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $orders  = Order::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         return view("user.order.index",compact('orders'));
         
     }
+
+    public function pendingOrder()
+    {
+
+        $orders  = Order::where('user_id', Auth::user()->id)
+                         ->where('status_message', 'Approved By HOD')
+                         ->orWhere('status_message', 'In Progress')
+                         ->orderBy('id', 'desc')->get();
+        return view("user.order.index",compact('orders'));
+        
+    }
+
+
+    public function approvedOrder()
+    {
+
+        $orders  = Order::where('user_id', Auth::user()->id)
+                          ->where('status_message', 'Approved By PMU')
+                          ->orderBy('id', 'desc')->get();
+        return view("user.order.index",compact('orders'));
+        
+    }
+
 
     public function orderDetail($orderId)
     {

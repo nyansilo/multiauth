@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('admin/order/hod/admin/markAsRead', function(){
+ 
+  Auth::user()->unreadNotifications->markAsRead();
+});
+
 
 // Route::get('/user/dashboard', function () {
 //     return view('user.dashboard');
@@ -46,6 +53,8 @@ Route::group(
       Route::get('/dashboard', 'DashboardController@dashboard')->name('user.dashboard');
       Route::get('/thank-you', 'DashboardController@thankYou')->name('user.thankyou');
       Route::get('/order', 'OrderController@index')->name('user.order');
+      Route::get('/pending/order', 'OrderController@pendingOrder')->name('user.pending.order');
+      Route::get('/approved/order', 'OrderController@approvedOrder')->name('user.approved.order');
 
 
       //Admin Profile root
@@ -118,7 +127,7 @@ Route::group(
         Route::post('/profile/store','ProfileController@profileStore')->name('admin.profile.store');
 
 
-
+      
         Route::get('/order', 'OrderController@index')->name('admin.order');
 
         //orderDetailHOD
@@ -268,3 +277,6 @@ Route::group(
 /*--------------------End of Admin routes--------------------------------*/
 
 
+// Route::get('/markAsRead', function(){
+//   auth()->user->unreadNotifications->markAsRead();
+// });

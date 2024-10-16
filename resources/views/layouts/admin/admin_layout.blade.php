@@ -348,6 +348,25 @@
 
 	</script>
 
+	<script>
+		
+		function markNotificationAsRead(notificationCount){
+			if(notificationCount !== '0'){
+				
+					$.get('admin/markAsRead', function (data) {
+						alert("it worked: " + data.status);
+						}).fail(function (data) {
+						alert(data.statusText);
+					});
+			
+			
+		
+			
+		}
+	}
+    </script>
+
+
 	
 
  @yield('script')

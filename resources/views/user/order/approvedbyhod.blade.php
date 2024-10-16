@@ -22,7 +22,7 @@
             </div>
 
             <div class="bs-stepper-line"></div>
-            <div class="step active" data-target="#test-l-3">
+            <div class="step" data-target="#test-l-3">
                 <div class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3">
                 <div class="bs-stepper-circle">3</div>
                 <div class="">
